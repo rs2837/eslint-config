@@ -14,6 +14,11 @@ const config = {
     browser: true,
     node: true,
   },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 
   overrides: [
     {
