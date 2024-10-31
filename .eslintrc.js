@@ -1,1 +1,3 @@
-module.exports = require('./index')
+import config from './index.js'
+
+export default config

@@ -1,113 +1,120 @@
-/**
- * @type {import('eslint').Linter.Config}
- */
-const config = {
-  extends: ['eslint:recommended', 'prettier'],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-  env: {
-    browser: true,
-    node: true,
-  },
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
+import js from '@eslint/js'
+import ts from 'typescript-eslint'
+import globals from 'globals'
+import react from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
+import import_ from 'eslint-plugin-import'
+import unusedImports from 'eslint-plugin-unused-imports'
 
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx'],
-      extends: [
-        'plugin:react/recommended',
-        'plugin:react-hooks/recommended',
-        'plugin:@typescript-eslint/recommended',
-      ],
-      plugins: ['@typescript-eslint', 'react', 'import', 'unused-imports'],
-      parser: '@typescript-eslint/parser',
-      rules: {
-        'no-empty': 'off',
-        'no-undef': 'off',
-        'react/display-name': 'off',
-        'react/prop-types': 'off',
-        '@typescript-eslint/camelcase': 'off',
-        '@typescript-eslint/explicit-function-return-type': 'off',
-        '@typescript-eslint/explicit-module-boundary-types': 'off',
-        '@typescript-eslint/no-empty-function': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/no-extra-semi': 'off',
-        '@typescript-eslint/no-namespace': 'off',
-        '@typescript-eslint/no-non-null-assertion': 'off',
-        '@typescript-eslint/no-unused-vars': 'off',
-
-        'sort-imports': ['error', { ignoreDeclarationSort: true }],
-        'import/extensions': ['error', 'ignorePackages'],
-        'import/first': 'error',
-        'import/no-duplicates': 'error',
-        'import/order': [
-          'error',
-          {
-            'newlines-between': 'always',
-            groups: [
-              'builtin',
-              'external',
-              ['parent', 'sibling', 'index'],
-              'type',
-            ],
-            alphabetize: { order: 'asc' },
-          },
-        ],
-        'unused-imports/no-unused-imports': 'error',
-
-        'react/jsx-no-literals': ['error', { ignoreProps: true }],
-        'react/self-closing-comp': [
-          'error',
-          {
-            component: true,
-            html: true,
-          },
-        ],
-
-        'object-shorthand': 'error',
-
-        '@typescript-eslint/no-floating-promises': 'error',
-        '@typescript-eslint/promise-function-async': [
-          'error',
-          {
-            checkArrowFunctions: true,
-            checkFunctionDeclarations: true,
-            checkFunctionExpressions: true,
-            checkMethodDeclarations: true,
-          },
-        ],
-        '@typescript-eslint/ban-ts-comment': [
-          'warn',
-          {
-            'ts-expect-error': 'allow-with-description',
-            'ts-ignore': 'allow-with-description',
-            'ts-nocheck': 'allow-with-description',
-            'ts-check': false,
-            minimumDescriptionLength: 3,
-          },
-        ],
-        '@typescript-eslint/ban-types': [
-          'error',
-          {
-            types: {
-              '{}': false,
-              object: false,
-            },
-            extendDefaults: true,
-          },
-        ],
+export default ts.config(
+  js.configs.recommended,
+  {
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
       },
     },
-  ],
-}
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    extends: [
+      {
+        plugins: { react },
+        rules: react.configs.recommended.rules,
+      },
+      {
+        plugins: { 'react-hooks': reactHooks },
+        rules: reactHooks.configs.recommended.rules,
+      },
+      ...ts.configs.recommended,
+    ],
+    plugins: {
+      react,
+      import: import_,
+      'unused-imports': unusedImports,
+    },
+    languageOptions: {
+      parser: ts.parser,
+    },
+    rules: {
+      'no-empty': 'off',
+      'no-undef': 'off',
+      'object-shorthand': 'error',
 
-module.exports = config
+      'react/display-name': 'off',
+      'react/prop-types': 'off',
+      'react/jsx-no-literals': ['error', { ignoreProps: true }],
+      'react/self-closing-comp': [
+        'error',
+        {
+          component: true,
+          html: true,
+        },
+      ],
+
+      '@typescript-eslint/camelcase': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-extra-semi': 'off',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-namespace': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/no-unsafe-function-type': 'error',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-wrapper-object-types': 'error',
+      '@typescript-eslint/ban-ts-comment': [
+        'warn',
+        {
+          'ts-expect-error': 'allow-with-description',
+          'ts-ignore': 'allow-with-description',
+          'ts-nocheck': 'allow-with-description',
+          'ts-check': false,
+          minimumDescriptionLength: 3,
+        },
+      ],
+      '@typescript-eslint/promise-function-async': [
+        'error',
+        {
+          checkArrowFunctions: true,
+          checkFunctionDeclarations: true,
+          checkFunctionExpressions: true,
+          checkMethodDeclarations: true,
+        },
+      ],
+
+      'sort-imports': ['error', { ignoreDeclarationSort: true }],
+      'import/extensions': ['error', 'ignorePackages'],
+      'import/first': 'error',
+      'import/no-duplicates': 'error',
+      'import/order': [
+        'error',
+        {
+          'newlines-between': 'always',
+          groups: [
+            'builtin',
+            'external',
+            ['parent', 'sibling', 'index'],
+            'type',
+          ],
+          alphabetize: { order: 'asc' },
+        },
+      ],
+      'unused-imports/no-unused-imports': 'error',
+    },
+  },
+)
