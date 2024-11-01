@@ -3,6 +3,7 @@ import ts from 'typescript-eslint'
 import globals from 'globals'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
+import reactCompiler from 'eslint-plugin-react-compiler'
 import import_ from 'eslint-plugin-import'
 import unusedImports from 'eslint-plugin-unused-imports'
 
@@ -43,6 +44,7 @@ export default ts.config(
     ],
     plugins: {
       react,
+      'react-compiler': reactCompiler,
       import: import_,
       'unused-imports': unusedImports,
     },
@@ -66,6 +68,7 @@ export default ts.config(
           html: true,
         },
       ],
+      'react-compiler/react-compiler': 'error',
 
       '@typescript-eslint/camelcase': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
