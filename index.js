@@ -55,7 +55,9 @@ export default ts.config(
       'object-shorthand': 'error',
 
       'react/display-name': 'off',
+      'react/jsx-uses-react': 'off',
       'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
       'react/jsx-no-literals': ['error', { ignoreProps: true }],
       'react/self-closing-comp': [
         'error',
