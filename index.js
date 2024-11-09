@@ -105,7 +105,6 @@ export default ts.config(
       ],
 
       'sort-imports': ['error', { ignoreDeclarationSort: true }],
-      'import/extensions': ['error', 'never'],
       'import/first': 'error',
       'import/no-duplicates': 'error',
       'import/order': [
