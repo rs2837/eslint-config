@@ -84,6 +84,7 @@ export default ts.config(
       '@typescript-eslint/no-unsafe-function-type': 'error',
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-wrapper-object-types': 'error',
+      '@typescript-eslint/unbound-method': 'error',
       '@typescript-eslint/ban-ts-comment': [
         'warn',
         {
